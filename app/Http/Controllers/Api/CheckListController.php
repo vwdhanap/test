@@ -44,7 +44,7 @@ class CheckListController extends Controller
      */
     public function destroy($checklistId)
     {
-        $checkList = CheckList::find($checklistId);
+        $checkList = CheckList::whereNull('parent_id')->find($checklistId);
 
         if (!$checkList) {
             return response()->json([
@@ -66,7 +66,7 @@ class CheckListController extends Controller
      */
     public function getCheckListItems($checklistId)
     {
-        $checkList = CheckList::find($checklistId);
+        $checkList = CheckList::whereNull('parent_id')->find($checklistId);
 
         if (!$checkList) {
             return response()->json([
@@ -87,7 +87,7 @@ class CheckListController extends Controller
     public function storeCheckListItem($checklistId, StoreCheckListRequest $request)
     {
         $user = $request->user();
-        $checkList = CheckList::find($checklistId);
+        $checkList = CheckList::whereNull('parent_id')->find($checklistId);
 
         if (!$checkList) {
             return response()->json([
@@ -111,7 +111,7 @@ class CheckListController extends Controller
      */
     public function showCheckListItem($checklistId, $checklistItemId)
     {
-        $checkList = CheckList::find($checklistId);
+        $checkList = CheckList::whereNull('parent_id')->find($checklistId);
 
         if (!$checkList) {
             return response()->json([
@@ -119,7 +119,7 @@ class CheckListController extends Controller
             ], 404);
         }
 
-        $item = $checkList->child()->firstWhere('id', $checklistItemId);
+        $item = $checkList->child()->find($checklistItemId);
 
         if (!$item) {
             return response()->json([
@@ -137,7 +137,7 @@ class CheckListController extends Controller
      */
     public function updateStatusCheckListItem($checklistId, $checklistItemId)
     {
-        $checkList = CheckList::find($checklistId);
+        $checkList = CheckList::whereNull('parent_id')->find($checklistId);
 
         if (!$checkList) {
             return response()->json([
@@ -145,7 +145,7 @@ class CheckListController extends Controller
             ], 404);
         }
 
-        $item = $checkList->child()->firstWhere('id', $checklistItemId);
+        $item = $checkList->child()->find($checklistItemId);
 
         if (!$item) {
             return response()->json([
@@ -166,7 +166,7 @@ class CheckListController extends Controller
      */
     public function deleteCheckListItem($checklistId, $checklistItemId)
     {
-        $checkList = CheckList::find($checklistId);
+        $checkList = CheckList::whereNull('parent_id')->find($checklistId);
 
         if (!$checkList) {
             return response()->json([
@@ -174,7 +174,7 @@ class CheckListController extends Controller
             ], 404);
         }
 
-        $item = $checkList->child()->firstWhere('id', $checklistItemId);
+        $item = $checkList->child()->find($checklistItemId);
 
         if (!$item) {
             return response()->json([
@@ -196,7 +196,7 @@ class CheckListController extends Controller
      */
     public function renameCheckListItem($checklistId, $checklistItemId, StoreCheckListRequest $request)
     {
-        $checkList = CheckList::find($checklistId);
+        $checkList = CheckList::whereNull('parent_id')->find($checklistId);
 
         if (!$checkList) {
             return response()->json([
@@ -204,7 +204,7 @@ class CheckListController extends Controller
             ], 404);
         }
 
-        $item = $checkList->child()->firstWhere('id', $checklistItemId);
+        $item = $checkList->child()->find($checklistItemId);
 
         if (!$item) {
             return response()->json([
